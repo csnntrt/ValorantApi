@@ -1,0 +1,21 @@
+{
+    "name": "csnntrt/valorant-api",
+    "description": "A Valorant API PHP Script",
+    "type": "library",
+    "require": {
+        "php": "^8.1"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Csnntrt\\ValorantApi\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Chael Aracosta",
+            "email": "aracostajm0946@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
