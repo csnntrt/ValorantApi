@@ -1,7 +1,6 @@
 <?php
 namespace Csnntrt\ValorantApi;
 require 'vendor/autoload.php';
-use Csnntrt\ValorantApi\AuthController;
 
 class AuthController extends InitClass{
     private $user;
@@ -32,13 +31,19 @@ class AuthController extends InitClass{
       "remember": true,
       "language": "en_US"
   }';
-        return $this->run($url,$method,$data);
+        $result = json_decode($this->run($url,$method,$data),true);
+        if($result["type"] == 'auth')
+        {
+            header("Location: index.php?error");
+            exit();
+        }
+        return $result;
     }
 
     public function Token()
     {
         self::Cookies();
-        $result = json_decode(self::Auth($this->user,$this->pass),true);
+        $result = self::Auth($this->user,$this->pass);
         parse_str(parse_url($result["response"]["parameters"]["uri"])[$result["response"]["mode"]], $result);
         $token = $result['token_type'].' '.$result['access_token'];
         return $token;
@@ -47,12 +52,27 @@ class AuthController extends InitClass{
         //$result['token_type'];
     }
 
-    public function EntitleToken()
+    public function EntitleToken($token)
     {
-        $token = self::Token();
         $url = 'https://entitlements.auth.riotgames.com/api/token/v1';
-        $result = json_decode($this->getEnt($url,$token),true);
+        $result = json_decode($this->get($url,$token),true);
         return $result['entitlements_token'];
+    }
+
+    public function PUUID($token)
+    {
+        $url = "https://auth.riotgames.com/userinfo";
+        $result = json_decode($this->get($url,$token),true);
+        return $result['sub'];
+    }
+
+    public function Login()
+    {
+        $data = array();
+        $data['token'] = self::Token();
+        $data['ent_token'] = self::EntitleToken($data['token']);
+        $data['puuid'] = self::PUUID($data['token']);
+        return $data;
     }
 
     function __destruct() {

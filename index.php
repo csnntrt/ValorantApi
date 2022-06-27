@@ -1,14 +1,48 @@
 <?php
 require 'vendor/autoload.php';
-use Csnntrt\ValorantApi\AuthController;
-//use Csnntrt\ValorantApi\InitClass;
-//$init = new InitClass('https://auth.riotgames.com/api/v1/authorization', 'POST', '{"client_id":"play-valorant-web-prod","nonce":"1","redirect_uri":"https://playvalorant.com/opt_in","response_type":"token id_token"}
-//');
-//$res = $init->run();
-//echo $res;
+use \Csnntrt\ValorantApi\Store;
+
+?>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Valorant Daily Store</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+<body>
+<?php
+
+if (!isset($_POST['user'])) {
+    include 'includes/login.php';
+    exit();
+}
+$user = $_POST['user'];
+$pass = $_POST['pass'];
+
+?>
+<div class="container">
+    <div class="row">
+                <?php
+                $store = new Store();
+                $skins = $store->show($user,$pass);
+                foreach ($skins as $skin){
+                    ?>
+            <div class="col-3 card">
+                    <img src="https://media.valorant-api.com/weaponskinlevels/<?=$skin?>/displayicon.png" class="w-100" alt="">
+            </div>
+                    <?php
+                }
+                    ?>
+        </div>
+</div>
 
 
-$Auth = new AuthController('booster2231','Ferariekko123$');
-//$authtoken = $Auth->Token();
-$ent_token = $Auth->EntitleToken();
-echo $ent_token;
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+</body>
+</html>
