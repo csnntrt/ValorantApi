@@ -1,3 +1,3 @@
 # ValorantApi
 
-valorant php api
+A Valorant PHP API
