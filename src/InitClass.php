@@ -25,7 +25,7 @@ class InitClass
         return curl_exec($curl);
     }
 
-    protected function getEnt($url,$token)
+    protected function get($url,$token)
     {
         $cookie = "COOKIE.TXT";
         $curl = curl_init();
@@ -41,6 +41,29 @@ class InitClass
             CURLOPT_HTTPHEADER => array(
                 'Authorization: '.$token,
                 'Content-Type: application/json'
+            ),
+            CURLOPT_COOKIEFILE => $cookie,
+            CURLOPT_COOKIEJAR => $cookie,
+        ));
+        return curl_exec($curl);
+    }
+
+    protected function getStore($url,$token,$ent_token)
+    {
+        $cookie = "COOKIE.TXT";
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_HTTPHEADER => array(
+                'X-Riot-Entitlements-JWT: '.$ent_token,
+                'Authorization: '.$token,
             ),
             CURLOPT_COOKIEFILE => $cookie,
             CURLOPT_COOKIEJAR => $cookie,
