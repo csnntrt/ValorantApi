@@ -8,7 +8,7 @@ use Csnntrt\ValorantApi\AuthController;
 //echo $res;
 
 
-$Auth = new AuthController('booster2231','Ferariekko123$');
+$Auth = new AuthController('booster2231','PassHere');
 //$authtoken = $Auth->Token();
 $ent_token = $Auth->EntitleToken();
 echo $ent_token;
