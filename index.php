@@ -23,14 +23,17 @@ $pass = $_POST['pass'];
 
 ?>
 <div class="container">
-    <div class="row">
+    <div class="row align-items-center">
                 <?php
                 $store = new Store();
                 $skins = $store->show($user,$pass);
                 foreach ($skins as $skin){
                     ?>
-            <div class="col-3 card">
-                    <img src="https://media.valorant-api.com/weaponskinlevels/<?=$skin?>/displayicon.png" class="w-100" alt="">
+            <div class="col-3">
+                    <img src="<?=$skin['data']['displayIcon']?>" class="w-100 img-fluid">
+                <div class="">
+                    <div class="d-flex justify-content-between align-items-baseline"><strong><?=$skin['data']['displayName']?></strong></div>
+                </div>
             </div>
                     <?php
                 }

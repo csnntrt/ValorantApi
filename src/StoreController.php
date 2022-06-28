@@ -8,6 +8,13 @@ class StoreController extends InitClass
     {
         $url = "https://pd.ap.a.pvp.net/store/v2/storefront/" .$puuid;
         $result = json_decode(self::getStore($url,$token,$ent_token),true);
-        return $result['SkinsPanelLayout']['SingleItemOffers'];
+        $skinids = $result['SkinsPanelLayout']['SingleItemOffers'];
+        $SkinInfo = new SkinInfo();
+        $skininfo = [];
+        foreach($skinids as $skinid){
+            $skininfo[] = $SkinInfo->grab($skinid);
+        }
+        return $skininfo;
+
     }
 }
