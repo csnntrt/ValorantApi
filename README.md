@@ -1,3 +1,3 @@
 # ValorantApi
 
-unfinished php valorant api
+A Valorant PHP API
